@@ -1,10 +1,10 @@
 package com.gildedrose;
 
 class GildedRose {
+    public static final int MAX_QUALITY = 50;
     private static final String AGED_BRIE = "Aged Brie";
     private static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
     private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
-
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -15,48 +15,52 @@ class GildedRose {
         for (Item item : items) {
             switch (item.getName()) {
                 case AGED_BRIE:
-                    updateQualitySpecialItem(item);
-                    item.setSellIn(item.getSellIn() - 1);
+                    decreaseSellIn(item);
+                    increaseQuality(item);
                     if (item.getSellIn() < 0) {
-                        if (item.getQuality() < 50) {
-                            item.setQuality(item.getQuality() + 1);
-                        }
+                        increaseQuality(item);
                     }
                     break;
                 case BACKSTAGE_PASSES:
-                    updateQualitySpecialItem(item);
-                    if (item.getSellIn() < 11) {
-                        updateQualitySpecialItem(item);
-                    }
-                    if (item.getSellIn() < 6) {
-                        updateQualitySpecialItem(item);
-                    }
-                    item.setSellIn(item.getSellIn() - 1);
+                    decreaseSellIn(item);
                     if (item.getSellIn() < 0) {
                         item.setQuality(0);
+                        break;
+                    }
+                    increaseQuality(item);
+                    if (item.getSellIn() < 10) {
+                        increaseQuality(item);
+                    }
+                    if (item.getSellIn() < 5) {
+                        increaseQuality(item);
                     }
                     break;
                 case SULFURAS:
                     item.setQuality(80);
                     break;
                 default:
+                    decreaseSellIn(item);
                     if (item.getQuality() > 0) {
-                        item.setQuality(item.getQuality() - 1);
+                        decreaseQuality(item);
                     }
-                    item.setSellIn(item.getSellIn() - 1);
-                    if (item.getSellIn() < 0) {
-                        if (item.getQuality() > 0) {
-                            item.setQuality(item.getQuality() - 1);
-                        }
+                    if (item.getSellIn() < 0 && item.getQuality() > 0) {
+                        decreaseQuality(item);
                     }
                     break;
             }
         }
-
     }
 
-    private void updateQualitySpecialItem(Item item) {
-        if (item.getQuality() >= 50) {
+    private void decreaseQuality(Item item) {
+        item.setQuality(item.getQuality() - 1);
+    }
+
+    private void decreaseSellIn(Item item) {
+        item.setSellIn(item.getSellIn() - 1);
+    }
+
+    private void increaseQuality(Item item) {
+        if (item.getQuality() >= MAX_QUALITY) {
             return;
         }
         item.setQuality(item.getQuality() + 1);
