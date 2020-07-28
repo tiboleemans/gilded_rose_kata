@@ -25,6 +25,14 @@ class GildedRoseTest {
     }
 
     @Test
+    void testLowerQualityValueConjuredItem() {
+        Item[] items = new Item[] { new Item("Conjured Mana Cake", 5, 5) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(3, app.items[0].getQuality());
+    }
+
+    @Test
     void testDegradeQualityValueTwiceAsFastAfterSellInExpiredNormalItem() {
         Item[] items = new Item[] { new Item("normalItem", 1, 5) };
         GildedRose app = new GildedRose(items);

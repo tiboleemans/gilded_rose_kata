@@ -5,6 +5,7 @@ class GildedRose {
     private static final String AGED_BRIE = "Aged Brie";
     private static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
     private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
+    private static final String CONJURED = "Conjured Mana Cake";
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -38,16 +39,25 @@ class GildedRose {
                 case SULFURAS:
                     item.setQuality(80);
                     break;
+                case CONJURED:
+                    decreaseSellIn(item);
+                    decreaseQualityNormalItem(item);
+                    decreaseQualityNormalItem(item);
+                    break;
                 default:
                     decreaseSellIn(item);
-                    if (item.getQuality() > 0) {
-                        decreaseQuality(item);
-                    }
-                    if (item.getSellIn() < 0 && item.getQuality() > 0) {
-                        decreaseQuality(item);
-                    }
+                    decreaseQualityNormalItem(item);
                     break;
             }
+        }
+    }
+
+    private void decreaseQualityNormalItem(Item item) {
+        if (item.getQuality() > 0) {
+            decreaseQuality(item);
+        }
+        if (item.getSellIn() < 0 && item.getQuality() > 0) {
+            decreaseQuality(item);
         }
     }
 
