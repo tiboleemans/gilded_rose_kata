@@ -25,6 +25,27 @@ class GildedRoseTest {
     }
 
     @Test
+    void testDegradeQualityValueTwiceAsFastAfterSellInExpiredNormalItem() {
+        Item[] items = new Item[] { new Item("normalItem", 1, 5) };
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(0, app.items[0].getSellIn());
+        assertEquals(4, app.items[0].getQuality());
+
+        app.updateQuality();
+        assertEquals(-1, app.items[0].getSellIn());
+        assertEquals(2, app.items[0].getQuality());
+
+        app.updateQuality();
+        assertEquals(-2, app.items[0].getSellIn());
+        assertEquals(0, app.items[0].getQuality());
+
+        app.updateQuality();
+        assertEquals(-3, app.items[0].getSellIn());
+        assertEquals(0, app.items[0].getQuality());
+    }
+
+    @Test
     void testQualityNormalItemNeverNegative() {
         Item[] items = new Item[] { new Item("normalItem", 5, 1) };
         GildedRose app = new GildedRose(items);
@@ -45,12 +66,28 @@ class GildedRoseTest {
     }
 
     @Test
-    void testIncreaseQualityValueNormalItem() {
+    void testIncreaseQualityValueSpecialItem() {
         Item[] items = new Item[] { new Item("Aged Brie", 5, 5) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("Aged Brie", app.items[0].getName());
         assertEquals(6, app.items[0].getQuality());
+    }
+
+    @Test
+    void testIncreaseQualityTwiceAsFastExpiredSpecialItem() {
+        Item[] items = new Item[] { new Item("Aged Brie", 1, 5) };
+        GildedRose app = new GildedRose(items);
+
+        app.updateQuality();
+        assertEquals("Aged Brie", app.items[0].getName());
+        assertEquals(0, app.items[0].getSellIn());
+        assertEquals(6, app.items[0].getQuality());
+
+        app.updateQuality();
+        assertEquals("Aged Brie", app.items[0].getName());
+        assertEquals(-1, app.items[0].getSellIn());
+        assertEquals(8, app.items[0].getQuality());
     }
 
     @Test
@@ -65,12 +102,12 @@ class GildedRoseTest {
     }
 
     @Test
-    void testEqualQualityValueLegendaryItem() {
+    void testQualityValueLegendaryItemAlways80() {
         Item[] items = new Item[] { new Item("Sulfuras, Hand of Ragnaros", 5, 5) };
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals("Sulfuras, Hand of Ragnaros", app.items[0].getName());
-        assertEquals(5, app.items[0].getQuality());
+        assertEquals(80, app.items[0].getQuality());
     }
 
     @Test
