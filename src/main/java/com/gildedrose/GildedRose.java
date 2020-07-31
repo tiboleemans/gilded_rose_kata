@@ -17,38 +17,54 @@ class GildedRose {
             switch (item.getName()) {
                 case AGED_BRIE:
                     decreaseSellIn(item);
-                    increaseQuality(item);
-                    if (item.getSellIn() < 0) {
-                        increaseQuality(item);
-                    }
+                    updateQualityAgedBrie(item);
                     break;
                 case BACKSTAGE_PASSES:
                     decreaseSellIn(item);
-                    if (item.getSellIn() < 0) {
-                        item.setQuality(0);
-                        break;
-                    }
-                    increaseQuality(item);
-                    if (item.getSellIn() < 10) {
-                        increaseQuality(item);
-                    }
-                    if (item.getSellIn() < 5) {
-                        increaseQuality(item);
-                    }
-                    break;
+                    updateQualityBackstagePasses(item);
+                break;
                 case SULFURAS:
-                    item.setQuality(80);
+                    updateQualitySulfuras(item);
                     break;
                 case CONJURED:
                     decreaseSellIn(item);
-                    decreaseQualityNormalItem(item);
-                    decreaseQualityNormalItem(item);
+                    updateQualityConjuredItem(item);
                     break;
                 default:
                     decreaseSellIn(item);
                     decreaseQualityNormalItem(item);
                     break;
             }
+        }
+    }
+
+    private void updateQualityConjuredItem(Item item) {
+        decreaseQualityNormalItem(item);
+        decreaseQualityNormalItem(item);
+    }
+
+    private void updateQualitySulfuras(Item item) {
+        item.setQuality(80);
+    }
+
+    private void updateQualityBackstagePasses(Item item) {
+        if (item.getSellIn() < 0) {
+            item.setQuality(0);
+            return;
+        }
+        increaseQuality(item);
+        if (item.getSellIn() < 10) {
+            increaseQuality(item);
+        }
+        if (item.getSellIn() < 5) {
+            increaseQuality(item);
+        }
+    }
+
+    private void updateQualityAgedBrie(Item item) {
+        increaseQuality(item);
+        if (item.getSellIn() < 0) {
+            increaseQuality(item);
         }
     }
 
