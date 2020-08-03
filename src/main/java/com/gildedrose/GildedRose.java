@@ -16,72 +16,21 @@ class GildedRose {
         for (Item item : items) {
             switch (item.getName()) {
                 case AGED_BRIE:
-                    decreaseSellIn(item);
                     new AgedBrie(item).update();
                     break;
                 case BACKSTAGE_PASSES:
-                    decreaseSellIn(item);
-                    updateQualityBackstagePasses(item);
-                break;
+                    new BackStagePassItem(item).update();
+                    break;
                 case SULFURAS:
-                    updateQualitySulfuras(item);
+                    new SulfurasItem(item).update();
                     break;
                 case CONJURED:
-                    decreaseSellIn(item);
-                    updateQualityConjuredItem(item);
+                    new Conjured(item).update();
                     break;
                 default:
-                    decreaseSellIn(item);
                     new NormalItem(item).update();
                     break;
             }
         }
-    }
-
-    private void updateQualityConjuredItem(Item item) {
-        decreaseQualityNormalItem(item);
-        decreaseQualityNormalItem(item);
-    }
-
-    private void updateQualitySulfuras(Item item) {
-        item.setQuality(80);
-    }
-
-    private void updateQualityBackstagePasses(Item item) {
-        if (item.getSellIn() < 0) {
-            item.setQuality(0);
-            return;
-        }
-        increaseQuality(item);
-        if (item.getSellIn() < 10) {
-            increaseQuality(item);
-        }
-        if (item.getSellIn() < 5) {
-            increaseQuality(item);
-        }
-    }
-
-    private void decreaseQualityNormalItem(Item item) {
-        if (item.getQuality() > 0) {
-            decreaseQuality(item);
-        }
-        if (item.getSellIn() < 0 && item.getQuality() > 0) {
-            decreaseQuality(item);
-        }
-    }
-
-    private void decreaseQuality(Item item) {
-        item.setQuality(item.getQuality() - 1);
-    }
-
-    private void decreaseSellIn(Item item) {
-        item.setSellIn(item.getSellIn() - 1);
-    }
-
-    private void increaseQuality(Item item) {
-        if (item.getQuality() >= MAX_QUALITY) {
-            return;
-        }
-        item.setQuality(item.getQuality() + 1);
     }
 }

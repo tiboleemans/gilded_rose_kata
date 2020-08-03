@@ -11,6 +11,7 @@ public class NormalItem {
     }
 
     public void update() {
+        decreaseSellIn(item);
         decreaseQualityNormalItem(item);
     }
 
@@ -25,7 +26,11 @@ public class NormalItem {
         item.setQuality(item.getQuality() - 1);
     }
 
-    private void decreaseQualityNormalItem(Item item) {
+    protected void decreaseSellIn(Item item) {
+        item.setSellIn(item.getSellIn() - 1);
+    }
+
+    protected void decreaseQualityNormalItem(Item item) {
         if (item.getQuality() > 0) {
             decreaseQuality(item);
         }
