@@ -2,12 +2,8 @@ package com.gildedrose.model;
 
 public class AgedBrie extends NormalItem {
 
-    public AgedBrie(Item item) {
-        super(item);
-    }
-
     @Override
-    public void update() {
+    public void update(Item item) {
         decreaseSellIn(item);
         increaseQuality(item);
         if (item.getSellIn() < 0) {

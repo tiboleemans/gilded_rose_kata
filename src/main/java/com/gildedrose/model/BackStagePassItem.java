@@ -1,12 +1,9 @@
 package com.gildedrose.model;
 
 public class BackStagePassItem extends NormalItem {
-    public BackStagePassItem(Item item) {
-        super(item);
-    }
 
     @Override
-    public void update() {
+    public void update(Item item) {
         decreaseSellIn(item);
         updateQualityBackstagePasses(item);
     }

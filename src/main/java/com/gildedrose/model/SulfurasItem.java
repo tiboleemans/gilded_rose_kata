@@ -1,12 +1,9 @@
 package com.gildedrose.model;
 
 public class SulfurasItem extends NormalItem {
-    public SulfurasItem(Item item) {
-        super(item);
-    }
 
     @Override
-    public void update() {
+    public void update(Item item) {
         item.setQuality(80);
     }
 }

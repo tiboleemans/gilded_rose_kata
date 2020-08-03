@@ -4,13 +4,7 @@ public class NormalItem {
 
     public static final int MAX_QUALITY = 50;
 
-    protected final Item item;
-
-    public NormalItem(Item item) {
-        this.item = item;
-    }
-
-    public void update() {
+    public void update(Item item) {
         decreaseSellIn(item);
         decreaseQualityNormalItem(item);
     }
