@@ -1,7 +1,7 @@
 package com.gildedrose;
 
 class GildedRose {
-    public static final int MAX_QUALITY = 50;
+    private static final int MAX_QUALITY = 50;
     private static final String AGED_BRIE = "Aged Brie";
     private static final String BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
     private static final String SULFURAS = "Sulfuras, Hand of Ragnaros";
@@ -17,7 +17,7 @@ class GildedRose {
             switch (item.getName()) {
                 case AGED_BRIE:
                     decreaseSellIn(item);
-                    updateQualityAgedBrie(item);
+                    new AgedBrie(item).update();
                     break;
                 case BACKSTAGE_PASSES:
                     decreaseSellIn(item);
@@ -32,7 +32,7 @@ class GildedRose {
                     break;
                 default:
                     decreaseSellIn(item);
-                    decreaseQualityNormalItem(item);
+                    new NormalItem(item).update();
                     break;
             }
         }
@@ -57,13 +57,6 @@ class GildedRose {
             increaseQuality(item);
         }
         if (item.getSellIn() < 5) {
-            increaseQuality(item);
-        }
-    }
-
-    private void updateQualityAgedBrie(Item item) {
-        increaseQuality(item);
-        if (item.getSellIn() < 0) {
             increaseQuality(item);
         }
     }
