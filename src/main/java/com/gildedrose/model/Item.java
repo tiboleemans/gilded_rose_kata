@@ -1,8 +1,8 @@
-package com.gildedrose;
+package com.gildedrose.model;
 
 public class Item {
 
-    private String name;
+    private final String name;
 
     private int sellIn;
 
@@ -16,10 +16,6 @@ public class Item {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public int getSellIn() {
@@ -39,7 +35,7 @@ public class Item {
     }
 
     @Override
-   public String toString() {
+    public String toString() {
         return this.name + ", " + this.sellIn + ", " + this.quality;
     }
 }

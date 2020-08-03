@@ -1,4 +1,4 @@
-package com.gildedrose;
+package com.gildedrose.model;
 
 public class SulfurasItem extends NormalItem {
     public SulfurasItem(Item item) {
